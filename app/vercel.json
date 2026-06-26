@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/riot-americas/:path*",
+      "destination": "https://americas.api.riotgames.com/:path*"
+    },
+    {
+      "source": "/api/riot-la1/:path*",
+      "destination": "https://la1.api.riotgames.com/:path*"
+    },
+    {
+      "source": "/api/leetify/:path*",
+      "destination": "https://api-public.cs-prod.leetify.com/:path*"
+    }
+  ]
+}

@@ -3,22 +3,14 @@ const API_KEY = 'RGAPI-c4782372-40e1-4a1d-a769-670ced9e206e';
 async function fetchFromRiot(host: string, path: string, params: Record<string, string> = {}) {
   const queryParams = new URLSearchParams({ ...params, api_key: API_KEY }).toString();
   const fullPath = `${path}?${queryParams}`;
-  const isLocalhost = typeof window !== 'undefined' && 
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
   let url = '';
-  if (isLocalhost) {
-    if (host === 'americas.api.riotgames.com') {
-      url = `/api/riot-americas${fullPath}`;
-    } else if (host === 'la1.api.riotgames.com') {
-      url = `/api/riot-la1${fullPath}`;
-    } else {
-      url = `https://${host}${fullPath}`;
-    }
+  if (host === 'americas.api.riotgames.com') {
+    url = `/api/riot-americas${fullPath}`;
+  } else if (host === 'la1.api.riotgames.com') {
+    url = `/api/riot-la1${fullPath}`;
   } else {
-    // Production CORS proxy
-    const targetUrl = `https://${host}${fullPath}`;
-    url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    url = `https://${host}${fullPath}`;
   }
 
   const response = await fetch(url);

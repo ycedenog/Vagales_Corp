@@ -23,17 +23,7 @@ export const LEETIFY_STEAM_MAP: Record<string, string | null> = {
 async function fetchFromLeetify(path: string, params: Record<string, string> = {}) {
   const queryParams = new URLSearchParams(params).toString();
   const fullPath = `${path}${queryParams ? '?' + queryParams : ''}`;
-  const isLocalhost = typeof window !== 'undefined' && 
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-
-  let url = '';
-  if (isLocalhost) {
-    url = `/api/leetify${fullPath}`;
-  } else {
-    // Production CORS proxy
-    const targetUrl = `https://api-public.cs-prod.leetify.com${fullPath}`;
-    url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-  }
+  const url = `/api/leetify${fullPath}`;
 
   const response = await fetch(url, {
     headers: {
