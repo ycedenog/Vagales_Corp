@@ -1,4 +1,4 @@
-const LEETIFY_API_KEY = '661e9ee3-869c-43aa-aec8-724b196cda6d';
+const LEETIFY_API_KEY = import.meta.env.VITE_LEETIFY_API_KEY || '';
 
 export const LEETIFY_STEAM_MAP: Record<string, string | null> = {
   yonkani: '76561198107015554',

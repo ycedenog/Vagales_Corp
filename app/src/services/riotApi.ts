@@ -1,4 +1,4 @@
-const API_KEY = 'RGAPI-c4782372-40e1-4a1d-a769-670ced9e206e';
+const API_KEY = import.meta.env.VITE_RIOT_API_KEY || '';
 
 async function fetchFromRiot(host: string, path: string, params: Record<string, string> = {}) {
   const queryParams = new URLSearchParams({ ...params, api_key: API_KEY }).toString();

@@ -3,3 +3,8 @@ app/dist/
 *.log
 .DS_Store
 .vscode/
+.env
+.env.local
+.env.*
+!.env.example
+
