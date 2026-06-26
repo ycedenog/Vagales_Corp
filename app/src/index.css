@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 151 100% 50%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 151 100% 50%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 20%;
+    --input: 240 3.7% 20%;
+    --ring: 151 100% 50%;
+    --radius: 0.625rem;
+  }
+
+  body {
+    @apply bg-[#0a0a0a] text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff88;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00cc6a;
+}
+
+/* Neon glow */
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 5px #00ff8830, 0 0 10px #00ff8820, 0 0 20px #00ff8810; }
+  50% { box-shadow: 0 0 10px #00ff8850, 0 0 20px #00ff8840, 0 0 40px #00ff8820; }
+}
+.neon-glow { animation: neonPulse 2s ease-in-out infinite; }
+
+.text-neon {
+  text-shadow: 0 0 10px #00ff8860, 0 0 20px #00ff8840, 0 0 40px #00ff8820;
+}
+
+/* Rank colors for CS2 */
+.rank-ge { color: #FF4655; }
+.rank-smfc { color: #E05297; }
+.rank-lem { color: #C163E2; }
+.rank-dmg { color: #E05252; }
+.rank-mge { color: #F5A623; }
+.rank-mg { color: #D3A324; }
+.rank-gn { color: #B5B5B5; }
+.rank-se { color: #A67C52; }
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Particle canvas */
+#particle-canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: auto;
+}
