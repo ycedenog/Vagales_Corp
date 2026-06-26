@@ -1,23 +1,36 @@
 const API_KEY = import.meta.env.VITE_RIOT_API_KEY || '';
 
 async function fetchFromRiot(host: string, path: string, params: Record<string, string> = {}) {
-  const queryParams = new URLSearchParams({ ...params, api_key: API_KEY }).toString();
-  const fullPath = `${path}?${queryParams}`;
+  const isDev = import.meta.env.DEV;
 
-  let url = '';
-  if (host === 'americas.api.riotgames.com') {
-    url = `/api/riot-americas${fullPath}`;
-  } else if (host === 'la1.api.riotgames.com') {
-    url = `/api/riot-la1${fullPath}`;
+  if (isDev) {
+    const queryParams = new URLSearchParams({ ...params, api_key: API_KEY }).toString();
+    const fullPath = `${path}?${queryParams}`;
+    let url = '';
+    if (host === 'americas.api.riotgames.com') {
+      url = `/api/riot-americas${fullPath}`;
+    } else if (host === 'la1.api.riotgames.com') {
+      url = `/api/riot-la1${fullPath}`;
+    } else {
+      url = `https://${host}${fullPath}`;
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Riot API request failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
   } else {
-    url = `https://${host}${fullPath}`;
-  }
+    // Production Vercel Serverless Function Proxy (key is stored securely on server)
+    const queryParams = new URLSearchParams({ host, path, ...params }).toString();
+    const url = `/api/riot?${queryParams}`;
 
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Riot API request failed: ${response.status} ${response.statusText}`);
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Riot API request failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
   }
-  return response.json();
 }
 
 let championCache: Record<string, { name: string; icon: string }> | null = null;

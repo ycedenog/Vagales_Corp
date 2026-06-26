@@ -21,20 +21,35 @@ export const LEETIFY_STEAM_MAP: Record<string, string | null> = {
 };
 
 async function fetchFromLeetify(path: string, params: Record<string, string> = {}) {
-  const queryParams = new URLSearchParams(params).toString();
-  const fullPath = `${path}${queryParams ? '?' + queryParams : ''}`;
-  const url = `/api/leetify${fullPath}`;
+  const isDev = import.meta.env.DEV;
 
-  const response = await fetch(url, {
-    headers: {
-      '_leetify_key': LEETIFY_API_KEY
+  if (isDev) {
+    const queryParams = new URLSearchParams(params).toString();
+    const fullPath = `${path}${queryParams ? '?' + queryParams : ''}`;
+    const url = `/api/leetify${fullPath}`;
+
+    const response = await fetch(url, {
+      headers: {
+        '_leetify_key': LEETIFY_API_KEY
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Leetify API request failed: ${response.status} ${response.statusText}`);
     }
-  });
+    return response.json();
+  } else {
+    // Production Vercel Serverless Function Proxy (key is stored securely on server)
+    const queryParams = new URLSearchParams({ path, ...params }).toString();
+    const url = `/api/leetify?${queryParams}`;
 
-  if (!response.ok) {
-    throw new Error(`Leetify API request failed: ${response.status} ${response.statusText}`);
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Leetify API request failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
   }
-  return response.json();
 }
 
 export interface LiveRecentCS2Match {
